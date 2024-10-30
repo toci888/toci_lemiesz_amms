@@ -19,9 +19,9 @@ builder.Services.AddHttpClient<ChatGptService>(client =>
     client.DefaultRequestHeaders.Add("Authorization", "Bearer YOUR_OPENAI_API_KEY");
 });
 
-builder.Services.AddSingleton<Speech.SpeechClient>();
-builder.Services.AddScoped<SpeechToTextService>();
-builder.Services.AddScoped<ConversationProcessor>();
+//builder.Services.AddSingleton<Speech.SpeechClient>();
+//builder.Services.AddScoped<SpeechToTextService>();
+//builder.Services.AddScoped<ConversationProcessor>();
 builder.Services.AddControllers();
 
 

@@ -12,7 +12,7 @@ const TherapeuticNotes = () => {
 
     const fetchNotes = async () => {
         try {
-            const response = await fetch('https://yourapi.com/api/notes');
+            const response = await fetch('https://192.168.45.47:7040/api/notes');
             const data = await response.json();
             setNotes(data);
         } catch (error) {
@@ -23,7 +23,7 @@ const TherapeuticNotes = () => {
     const addNote = async () => {
         if (note.trim()) {
             try {
-                const response = await fetch('https://yourapi.com/api/notes', {
+                const response = await fetch('https://192.168.45.47:7040/api/notes', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

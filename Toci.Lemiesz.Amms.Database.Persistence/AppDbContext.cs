@@ -8,6 +8,9 @@ public class AppDbContext : DbContext
     public DbSet<Session> Sessions { get; set; }
     public DbSet<ConversationEntry> ConversationEntries { get; set; }
     public DbSet<SessionReport> SessionReports { get; set; }
+    public DbSet<TherapeuticNote> TherapeuticNotes { get; set; }
+    public DbSet<Medication> Medications { get; set; }
+    public DbSet<Visit> Visits { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

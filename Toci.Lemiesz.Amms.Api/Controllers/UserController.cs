@@ -69,71 +69,92 @@ public class UsersController : ControllerBase
     }
 }
 
-// Controllers/TherapeuticNotesController.cs
 [ApiController]
 [Route("api/[controller]")]
 public class TherapeuticNotesController : ControllerBase
 {
-    private static List<TherapeuticNote> notes = new List<TherapeuticNote>();
-    private static int nextId = 1;
+    private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
+
+    public TherapeuticNotesController(AppDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<TherapeuticNote>> GetNotes()
+    public async Task<ActionResult<IEnumerable<TherapeuticNoteDto>>> GetNotes()
     {
-        return Ok(notes);
+        var notes = await _context.TherapeuticNotes.ToListAsync();
+        return Ok(_mapper.Map<IEnumerable<TherapeuticNoteDto>>(notes));
     }
 
     [HttpPost]
-    public ActionResult<TherapeuticNote> AddNote([FromBody] TherapeuticNoteDto noteDto)
+    public async Task<ActionResult<TherapeuticNoteDto>> AddNote([FromBody] TherapeuticNoteDto noteDto)
     {
-        var note = new TherapeuticNote { Id = nextId++, Text = noteDto.Text };
-        notes.Add(note);
-        return CreatedAtAction(nameof(GetNotes), new { id = note.Id }, note);
+        var note = _mapper.Map<TherapeuticNote>(noteDto);
+        _context.TherapeuticNotes.Add(note);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetNotes), new { id = note.Id }, _mapper.Map<TherapeuticNoteDto>(note));
     }
 }
 
-// Controllers/MedicationsController.cs
 [ApiController]
 [Route("api/[controller]")]
 public class MedicationsController : ControllerBase
 {
-    private static List<Medication> medications = new List<Medication>();
-    private static int nextId = 1;
+    private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
+
+    public MedicationsController(AppDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Medication>> GetMedications()
+    public async Task<ActionResult<IEnumerable<MedicationDto>>> GetMedications()
     {
-        return Ok(medications);
+        var medications = await _context.Medications.ToListAsync();
+        return Ok(_mapper.Map<IEnumerable<MedicationDto>>(medications));
     }
 
     [HttpPost]
-    public ActionResult<Medication> AddMedication([FromBody] MedicationDto medicationDto)
+    public async Task<ActionResult<MedicationDto>> AddMedication([FromBody] MedicationDto medicationDto)
     {
-        var medication = new Medication { Id = nextId++, Name = medicationDto.Name };
-        medications.Add(medication);
-        return CreatedAtAction(nameof(GetMedications), new { id = medication.Id }, medication);
+        var medication = _mapper.Map<Medication>(medicationDto);
+        _context.Medications.Add(medication);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetMedications), new { id = medication.Id }, _mapper.Map<MedicationDto>(medication));
     }
 }
 
-// Controllers/VisitsController.cs
 [ApiController]
 [Route("api/[controller]")]
 public class VisitsController : ControllerBase
 {
-    private static List<Visit> visits = new List<Visit>();
-    private static int nextId = 1;
+    private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
+
+    public VisitsController(AppDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Visit>> GetVisits()
+    public async Task<ActionResult<IEnumerable<VisitDto>>> GetVisits()
     {
-        return Ok(visits);
+        var visits = await _context.Visits.ToListAsync();
+        return Ok(_mapper.Map<IEnumerable<VisitDto>>(visits));
     }
 
     [HttpPost]
-    public ActionResult<Visit> AddVisit([FromBody] VisitDto visitDto)
+    public async Task<ActionResult<VisitDto>> AddVisit([FromBody] VisitDto visitDto)
     {
-        var visit = new Visit { Id = nextId++, Date = visitDto.Date, Notes = visitDto.Notes };
-        visits.Add(visit);
-        return CreatedAtAction(nameof(GetVisits), new { id = visit.Id }, visit);
+        var visit = _mapper.Map<Visit>(visitDto);
+        _context.Visits.Add(visit);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetVisits), new { id = visit.Id }, _mapper.Map<VisitDto>(visit));
     }
 }

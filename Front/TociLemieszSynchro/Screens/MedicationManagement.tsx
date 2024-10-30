@@ -12,7 +12,7 @@ const MedicationManagement = () => {
 
     const fetchMedications = async () => {
         try {
-            const response = await fetch('https://yourapi.com/api/medications');
+            const response = await fetch('http://192.168.45.47:7040/api/medications');
             const data = await response.json();
             setMedications(data);
         } catch (error) {
@@ -23,7 +23,7 @@ const MedicationManagement = () => {
     const addMedication = async () => {
         if (medication.trim()) {
             try {
-                const response = await fetch('https://yourapi.com/api/medications', {
+                const response = await fetch('http://192.168.45.47:7040/api/medications', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,3 +71,39 @@ const MedicationManagement = () => {
 };
 
 // Similar styles as before
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#fff',
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    medicationsList: {
+        flex: 1,
+        marginBottom: 10,
+    },
+    medication: {
+        padding: 10,
+        borderRadius: 5,
+        backgroundColor: '#e1f5fe',
+        marginVertical: 5,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+    },
+    languageContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+});
+
+export default MedicationManagement;

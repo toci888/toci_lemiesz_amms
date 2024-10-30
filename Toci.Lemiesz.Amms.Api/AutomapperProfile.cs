@@ -12,5 +12,17 @@ public class MappingProfile : Profile
 
         CreateMap<ConversationEntry, ConversationEntryDto>();
         CreateMap<CreateConversationEntryDto, ConversationEntry>();
+
+        // Therapeutic Note mappings
+        CreateMap<TherapeuticNote, TherapeuticNoteDto>();
+        CreateMap<TherapeuticNoteDto, TherapeuticNote>();
+
+        // Medication mappings
+        CreateMap<Medication, MedicationDto>();
+        CreateMap<MedicationDto, Medication>();
+
+        // Visit mappings
+        CreateMap<Visit, VisitDto>();
+        CreateMap<VisitDto, Visit>();
     }
 }
