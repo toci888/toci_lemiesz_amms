@@ -1,42 +1,41 @@
 ﻿using Google.Cloud.Speech.V1;
 using System;
-using System.Data.SQLite;
-using System.IO;
+using System.Data;
+using Npgsql;
 using System.Threading.Tasks;
 //using OpenAI_API;
 using OpenAI.Chat;
+using OpenAI.API;
+using OpenAI.API.Completions;
+using OpenAI.API.Models;
 
 namespace SpeechToTextChatGPT
 {
-    public class Program
+    class Program
     {
         static async Task Main(string[] args)
         {
             string audioFilePath = "path_to_your_audio_file.wav"; // Update with your audio file path
-            string dbPath = "speech_texts.db";
+            string connectionString = "Host=localhost;Username=your_username;Password=your_password;Database=speech_texts"; // Update with your PostgreSQL credentials
 
-            CreateDatabase(dbPath);
+            CreateDatabase(connectionString);
             string transcribedText = await TranscribeAudioAsync(audioFilePath);
-            InsertText(dbPath, transcribedText);
+            InsertText(connectionString, transcribedText);
             string chatGptResponse = await GetChatGptResponse(transcribedText);
 
             Console.WriteLine("Transcribed Text: " + transcribedText);
             Console.WriteLine("ChatGPT Response: " + chatGptResponse);
         }
 
-        static void CreateDatabase(string dbPath)
+        static void CreateDatabase(string connectionString)
         {
-            if (!File.Exists(dbPath))
+            using (var connection = new NpgsqlConnection(connectionString))
             {
-                SQLiteConnection.CreateFile(dbPath);
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+                connection.Open();
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS texts (id SERIAL PRIMARY KEY, text TEXT)";
+                using (var command = new NpgsqlCommand(createTableQuery, connection))
                 {
-                    connection.Open();
-                    string createTableQuery = "CREATE TABLE texts (id INTEGER PRIMARY KEY, text TEXT)";
-                    using (var command = new SQLiteCommand(createTableQuery, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
+                    command.ExecuteNonQuery();
                 }
             }
         }
@@ -54,13 +53,13 @@ namespace SpeechToTextChatGPT
             return string.Join(" ", response.Results.Select(result => result.Alternatives.First().Transcript));
         }
 
-        static void InsertText(string dbPath, string text)
+        static void InsertText(string connectionString, string text)
         {
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
                 string insertQuery = "INSERT INTO texts (text) VALUES (@text)";
-                using (var command = new SQLiteCommand(insertQuery, connection))
+                using (var command = new NpgsqlCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@text", text);
                     command.ExecuteNonQuery();
@@ -70,9 +69,10 @@ namespace SpeechToTextChatGPT
 
         static async Task<string> GetChatGptResponse(string prompt)
         {
-            //var openAiClient = new OpenAIAPI("your_openai_api_key"); // Replace with your OpenAI API key
-            //var chatResponse = await openAiClient.Chat.CreateMessageAsync(new ChatMessage("user", prompt));
-            //return chatResponse.Content;
+            var openAiClient = new OpenAIAPI("your_openai_api_key"); // Replace with your OpenAI API key
+            //var chatResponse = await openAiClient.Completions.StreamCompletionAsync(new CompletionRequest(prompt,new Model("")));
+
+            //return chatResponse;
 
             return null;
         }
