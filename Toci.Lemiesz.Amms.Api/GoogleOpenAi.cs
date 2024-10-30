@@ -11,9 +11,9 @@ using OpenAI.API.Models;
 
 namespace SpeechToTextChatGPT
 {
-    class Program
+    public class ProgramListen
     {
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             string audioFilePath = "path_to_your_audio_file.wav"; // Update with your audio file path
             string connectionString = "Host=localhost;Username=your_username;Password=your_password;Database=speech_texts"; // Update with your PostgreSQL credentials

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\Toci.Lemiesz.Amms.Database.Persistence</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toci.Lemiesz.Amms.Api\Toci.Lemiesz.Amms.Api.csproj" />
+    <ProjectReference Include="..\Toci.Lemiesz.Amms.Database.Persistence\Toci.Lemiesz.Amms.Database.Persistence.csproj" />
+    <ProjectReference Include="..\Toci.LEmieszAmms.Models\Toci.LemieszAmms.Models.csproj" />
+  </ItemGroup>
+
+</Project>

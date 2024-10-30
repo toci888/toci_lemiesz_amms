@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toci.LemieszAmms.Models", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toci.Lemiesz.Amms.Api", "..\Toci.Lemiesz.Amms.Api\Toci.Lemiesz.Amms.Api.csproj", "{EDD21737-F631-4A34-B823-889C0E3221CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toci.Lemiesz.Amms.Listen", "..\Toci.Lemiesz.Amms.Listen\Toci.Lemiesz.Amms.Listen.csproj", "{7AC3F816-64C3-49EA-8C55-6314DF2943A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EDD21737-F631-4A34-B823-889C0E3221CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD21737-F631-4A34-B823-889C0E3221CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD21737-F631-4A34-B823-889C0E3221CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC3F816-64C3-49EA-8C55-6314DF2943A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC3F816-64C3-49EA-8C55-6314DF2943A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC3F816-64C3-49EA-8C55-6314DF2943A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC3F816-64C3-49EA-8C55-6314DF2943A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
