@@ -10,7 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Google.Cloud.Speech.V1" Version="3.8.0" />
+    <PackageReference Include="OpenAI" Version="2.0.0" />
+    <PackageReference Include="OpenAIApi" Version="1.0.1" />
+    <PackageReference Include="OpenAIAPIRecognizer" Version="1.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
   <ItemGroup>
