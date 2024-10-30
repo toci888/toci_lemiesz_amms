@@ -1,0 +1,6 @@
+@Toci.Lemiesz.Amms.Api_HostAddress = http://localhost:5105
+
+GET {{Toci.Lemiesz.Amms.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

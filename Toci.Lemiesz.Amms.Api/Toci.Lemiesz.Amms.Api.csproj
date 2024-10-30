@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\Toci.Lemiesz.Amms.Database.Persistence</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toci.Lemiesz.Amms.Database.Persistence\Toci.Lemiesz.Amms.Database.Persistence.csproj" />
+    <ProjectReference Include="..\Toci.LEmieszAmms.Models\Toci.LemieszAmms.Models.csproj" />
+  </ItemGroup>
+
+</Project>
