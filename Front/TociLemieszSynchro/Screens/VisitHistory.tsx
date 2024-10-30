@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
 
 const VisitHistory = () => {
-    const [language, setLanguage] = useState('English'); // Default language
-    const [visits, setVisits] = useState([
-        { id: '1', date: '2023-01-15', notes: 'Routine check-up' },
-        { id: '2', date: '2023-02-10', notes: 'Follow-up on medication' },
-        { id: '3', date: '2023-03-05', notes: 'Annual health exam' },
-    ]);
+    const [language, setLanguage] = useState('English');
+    const [visits, setVisits] = useState([]);
+
+    useEffect(() => {
+        fetchVisits();
+    }, []);
+
+    const fetchVisits = async () => {
+        try {
+            const response = await fetch('https://yourapi.com/api/visits');
+            const data = await response.json();
+            setVisits(data);
+        } catch (error) {
+            console.error('Error fetching visits:', error);
+        }
+    };
 
     const handleLanguageChange = (lang) => {
         setLanguage(lang);
@@ -26,7 +36,7 @@ const VisitHistory = () => {
                         <Text style={styles.visitNotes}>{item.notes}</Text>
                     </View>
                 )}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 style={styles.visitsList}
             />
             <View style={styles.languageContainer}>
@@ -36,6 +46,8 @@ const VisitHistory = () => {
         </View>
     );
 };
+
+// Similar styles as before
 
 const styles = StyleSheet.create({
     container: {

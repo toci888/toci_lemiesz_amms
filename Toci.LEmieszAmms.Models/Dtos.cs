@@ -49,3 +49,22 @@ public class CreateConversationEntryDto
     public bool IsVoice { get; set; }
     public string ChatGPTResponse { get; set; }
 }
+
+// DTOs/TherapeuticNoteDto.cs
+public class TherapeuticNoteDto
+{
+    public string Text { get; set; }
+}
+
+// DTOs/MedicationDto.cs
+public class MedicationDto
+{
+    public string Name { get; set; }
+}
+
+// DTOs/VisitDto.cs
+public class VisitDto
+{
+    public DateTime Date { get; set; }
+    public string Notes { get; set; }
+}

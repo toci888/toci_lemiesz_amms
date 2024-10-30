@@ -68,3 +68,72 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 }
+
+// Controllers/TherapeuticNotesController.cs
+[ApiController]
+[Route("api/[controller]")]
+public class TherapeuticNotesController : ControllerBase
+{
+    private static List<TherapeuticNote> notes = new List<TherapeuticNote>();
+    private static int nextId = 1;
+
+    [HttpGet]
+    public ActionResult<IEnumerable<TherapeuticNote>> GetNotes()
+    {
+        return Ok(notes);
+    }
+
+    [HttpPost]
+    public ActionResult<TherapeuticNote> AddNote([FromBody] TherapeuticNoteDto noteDto)
+    {
+        var note = new TherapeuticNote { Id = nextId++, Text = noteDto.Text };
+        notes.Add(note);
+        return CreatedAtAction(nameof(GetNotes), new { id = note.Id }, note);
+    }
+}
+
+// Controllers/MedicationsController.cs
+[ApiController]
+[Route("api/[controller]")]
+public class MedicationsController : ControllerBase
+{
+    private static List<Medication> medications = new List<Medication>();
+    private static int nextId = 1;
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Medication>> GetMedications()
+    {
+        return Ok(medications);
+    }
+
+    [HttpPost]
+    public ActionResult<Medication> AddMedication([FromBody] MedicationDto medicationDto)
+    {
+        var medication = new Medication { Id = nextId++, Name = medicationDto.Name };
+        medications.Add(medication);
+        return CreatedAtAction(nameof(GetMedications), new { id = medication.Id }, medication);
+    }
+}
+
+// Controllers/VisitsController.cs
+[ApiController]
+[Route("api/[controller]")]
+public class VisitsController : ControllerBase
+{
+    private static List<Visit> visits = new List<Visit>();
+    private static int nextId = 1;
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Visit>> GetVisits()
+    {
+        return Ok(visits);
+    }
+
+    [HttpPost]
+    public ActionResult<Visit> AddVisit([FromBody] VisitDto visitDto)
+    {
+        var visit = new Visit { Id = nextId++, Date = visitDto.Date, Notes = visitDto.Notes };
+        visits.Add(visit);
+        return CreatedAtAction(nameof(GetVisits), new { id = visit.Id }, visit);
+    }
+}

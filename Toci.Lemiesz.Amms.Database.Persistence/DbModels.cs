@@ -57,3 +57,25 @@ public class SessionReport
     public int SummaryLength { get; set; }
     public int TotalMessages { get; set; }
 }
+
+// Models/TherapeuticNote.cs
+public class TherapeuticNote
+{
+    public int Id { get; set; }
+    public string Text { get; set; }
+}
+
+// Models/Medication.cs
+public class Medication
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+// Models/Visit.cs
+public class Visit
+{
+    public int Id { get; set; }
+    public DateTime Date { get; set; }
+    public string Notes { get; set; }
+}

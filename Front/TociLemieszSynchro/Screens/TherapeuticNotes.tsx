@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 
 const TherapeuticNotes = () => {
@@ -6,10 +6,37 @@ const TherapeuticNotes = () => {
     const [notes, setNotes] = useState([]);
     const [language, setLanguage] = useState('English'); // Default language
 
-    const addNote = () => {
+    useEffect(() => {
+        fetchNotes();
+    }, []);
+
+    const fetchNotes = async () => {
+        try {
+            const response = await fetch('https://yourapi.com/api/notes');
+            const data = await response.json();
+            setNotes(data);
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+        }
+    };
+
+    const addNote = async () => {
         if (note.trim()) {
-            setNotes(prevNotes => [...prevNotes, { id: Date.now().toString(), text: note }]);
-            setNote('');
+            try {
+                const response = await fetch('https://yourapi.com/api/notes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: note }),
+                });
+                if (response.ok) {
+                    setNote('');
+                    fetchNotes(); // Refresh notes after adding
+                }
+            } catch (error) {
+                console.error('Error adding note:', error);
+            }
         }
     };
 
@@ -25,7 +52,7 @@ const TherapeuticNotes = () => {
             <FlatList
                 data={notes}
                 renderItem={({ item }) => <Text style={styles.note}>{item.text}</Text>}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 style={styles.notesList}
             />
             <TextInput

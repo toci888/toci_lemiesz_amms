@@ -1,15 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 
 const MedicationManagement = () => {
     const [medication, setMedication] = useState('');
     const [medications, setMedications] = useState([]);
-    const [language, setLanguage] = useState('English'); // Default language
+    const [language, setLanguage] = useState('English');
 
-    const addMedication = () => {
+    useEffect(() => {
+        fetchMedications();
+    }, []);
+
+    const fetchMedications = async () => {
+        try {
+            const response = await fetch('https://yourapi.com/api/medications');
+            const data = await response.json();
+            setMedications(data);
+        } catch (error) {
+            console.error('Error fetching medications:', error);
+        }
+    };
+
+    const addMedication = async () => {
         if (medication.trim()) {
-            setMedications(prevMedications => [...prevMedications, { id: Date.now().toString(), name: medication }]);
-            setMedication('');
+            try {
+                const response = await fetch('https://yourapi.com/api/medications', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: medication }),
+                });
+                if (response.ok) {
+                    setMedication('');
+                    fetchMedications(); // Refresh medications after adding
+                }
+            } catch (error) {
+                console.error('Error adding medication:', error);
+            }
         }
     };
 
@@ -19,11 +46,13 @@ const MedicationManagement = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>{language === 'English' ? 'Medication Management' : 'Zarządzanie lekami'}</Text>
+            <Text style={styles.header}>
+                {language === 'English' ? 'Medication Management' : 'Zarządzanie lekami'}
+            </Text>
             <FlatList
                 data={medications}
                 renderItem={({ item }) => <Text style={styles.medication}>{item.name}</Text>}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 style={styles.medicationsList}
             />
             <TextInput
@@ -41,38 +70,4 @@ const MedicationManagement = () => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#fff',
-    },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    medicationsList: {
-        flex: 1,
-        marginBottom: 10,
-    },
-    medication: {
-        padding: 10,
-        borderRadius: 5,
-        backgroundColor: '#e1f5fe',
-        marginVertical: 5,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-    },
-    languageContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-});
-
-export default MedicationManagement;
+// Similar styles as before
