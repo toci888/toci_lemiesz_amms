@@ -7,6 +7,7 @@ import TherapeuticNotes from './Screens/TherapeuticNotes';
 import MedicationManagement from './Screens/MedicationManagement';
 import Chat from './Screens/Chat';
 import Home from './Screens/Home';
+import SpeechToText from './Components/SpeechToText';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const App = () => {
                 <Stack.Screen name="TherapeuticNotes" component={TherapeuticNotes} />
                 <Stack.Screen name="MedicationManagement" component={MedicationManagement} />
                 <Stack.Screen name="Chat" component={Chat} />
+                <Stack.Screen name="SpeechToText" component={SpeechToText} />
             </Stack.Navigator>
         </NavigationContainer>
     );
